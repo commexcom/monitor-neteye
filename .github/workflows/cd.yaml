@@ -19,19 +19,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Create Docker repo if needed
-        run: |
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -u "$DOCKER_USERNAME:$DOCKER_PASSWORD" "https://hub.docker.com/v2/repositories/$DOCKER_USERNAME/$DOCKER_REPO/")
-          if [ "$RESPONSE" -eq 404 ]; then
-            echo "Repositório não encontrado. Criando..."
-            curl -s -X POST "https://hub.docker.com/v2/repositories/$DOCKER_USERNAME/$DOCKER_REPO/" \
-              -H "Content-Type: application/json" \
-              -u "$DOCKER_USERNAME:$DOCKER_PASSWORD" \
-              -d '{"namespace": "'$DOCKER_USERNAME'", "name": "'$DOCKER_REPO'", "is_private": false}'
-          else
-            echo "Repositório já existe."
-          fi
-
       - name: Build image and push to Docker Hub
         uses: docker/build-push-action@v3
         with:
