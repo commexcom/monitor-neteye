@@ -51,6 +51,4 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "Deploy Action"
           git diff --exit-code || (git commit -am "create image to version ${{ github.sha }}")
-
-      - name: Push to GitHub
-        uses: ad-m/github-push-action@master
+          git push
