@@ -22,6 +22,7 @@ jobs:
       - name: Build image and push to Docker Hub
         uses: docker/build-push-action@v1.1.0
         with:
+          context: .
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
           repository: ${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_REPO }}
