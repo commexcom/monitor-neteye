@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: base-repository
+spec:
+  selector:
+    matchLabels:
+      app: base-repository
+  template:
+    metadata:
+      labels:
+        app: base-repository
+    spec:
+      containers:
+        - name: base-repository
+          image: app
+          ports:
+            - containerPort: 3000

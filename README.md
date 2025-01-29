@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Base Repository NextJS
 
-## Getting Started
+Este repositório serve como base para projetos Next.js, ideal para quem deseja criar novos projetos rapidamente com uma configuração inicial padrão.
 
-First, run the development server:
+## 🚀 Começando
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Este projeto foi criado com o objetivo de fornecer uma estrutura inicial para outros projetos. Ele contém uma configuração básica de um aplicativo Next.js, pronto para ser utilizado como base para outras aplicações.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Requisitos
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Node.js**: A versão recomendada do Node.js é a 16 ou superior.
+- **pnpm**: Usamos o `pnpm` como gerenciador de pacotes para garantir uma instalação mais rápida e eficiente. **Recomendamos fortemente o uso do `pnpm`**.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Instalação
 
-## Learn More
+1. Clone o repositório:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/seu-usuario/base-repository.git
+   cd base-repository
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Instale as dependências com o `pnpm`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   pnpm install
+   ```
 
-## Deploy on Vercel
+### Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Desenvolvimento**: Inicie o servidor de desenvolvimento com o TurboPack para maior performance:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+  ```bash
+  pnpm dev
+  ```
+
+- **Construção**: Gere os arquivos de produção:
+
+  ```bash
+  pnpm build
+  ```
+
+- **Iniciar**: Inicie o aplicativo em modo de produção:
+
+  ```bash
+  pnpm start
+  ```
+
+- **Lint**: Verifique o código com o ESLint:
+
+  ```bash
+  pnpm lint
+  ```
+
+## 🔧 Dependências
+
+- **React**: `^19.0.0`
+- **React-DOM**: `^19.0.0`
+- **Next.js**: `15.1.6`
+- **TypeScript**: `^5`
+- **Tailwind CSS**: `^3.4.1`
+- **ESLint**: `^9`
+
+## 🚧 O que está por vir?
+
+Atualmente, este repositório contém apenas a configuração básica para começar a usar o Next.js com o Tailwind CSS e TypeScript. No futuro, mais recursos serão adicionados, como configurações de integração contínua, testes automatizados, e muito mais!
+
+## Contribuindo
+
+Sinta-se à vontade para fazer um fork deste repositório e adicionar melhorias ou novos recursos. Se você encontrar problemas ou tiver sugestões, por favor, abra uma issue.
+
+## Licença
+
+Este projeto é licenciado sob a [MIT License](LICENSE).
