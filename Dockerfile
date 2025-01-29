@@ -5,7 +5,7 @@ FROM node:18 as build
 WORKDIR /app
 
 # Copia os arquivos de dependências
-COPY package.json yarn.lock ./
+COPY package.json pnpm.lock ./
 
 # Instala as dependências
 RUN yarn install --frozen-lockfile
@@ -23,7 +23,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copia apenas os arquivos necessários para produção
-COPY --from=build /app/package.json /app/yarn.lock ./
+COPY --from=build /app/package.json /app/pnpm.lock ./
 COPY --from=build /app/.next ./.next
 COPY --from=build /app/public ./public
 COPY --from=build /app/node_modules ./node_modules
