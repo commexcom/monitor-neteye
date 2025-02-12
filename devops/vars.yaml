@@ -1,0 +1,5 @@
+# vars.yaml
+repositoryName: base-repository
+repositoryOwner: athaydaooo
+dstPort: 3000
+domain: teste.guaruja.sp.gov.br

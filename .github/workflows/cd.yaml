@@ -5,11 +5,7 @@ on:
     branches: [main]
 
 env:
-  DOCKER_USERNAME: athaydaooo
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  DOCKER_REPO: base-repository
-  REPOSITORY_NAME: base-repository
-  REPOSITORY_OWNER: athaydaooo
 
 jobs:
   build:
@@ -19,12 +15,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Set environment variables from vars.yaml
+        id: set-env-vars
+        run: |
+          export REPOSITORY_NAME=$(yq eval '.repositoryName' ../../devops/vars.yaml)
+          export REPOSITORY_OWNER=$(yq eval '.repositoryOwner' ../../devops/vars.yaml)
+
+          echo "REPOSITORY_NAME=${REPOSITORY_NAME}"
+          echo "REPOSITORY_OWNER=${REPOSITORY_OWNER}"
+
       - name: Build image and push to Docker Hub
         uses: docker/build-push-action@v1.1.0
         with:
-          username: ${{ env.DOCKER_USERNAME }}
+          username: ${{ env.REPOSITORY_OWNER }}
           password: ${{ env.DOCKER_PASSWORD }}
-          repository: ${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_REPO }}
+          repository: ${{ env.REPOSITORY_OWNER }}/${{ env.REPOSITORY_NAME }}
           tags: ${{ github.sha }}, latest
 
   deploy:
@@ -35,6 +40,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Set environment variables from vars.yaml
+        id: set-env-vars
+        run: |
+          export REPOSITORY_NAME=$(yq eval '.repositoryName' ../../devops/vars.yaml)
+          export REPOSITORY_OWNER=$(yq eval '.repositoryOwner' ../../devops/vars.yaml)
+
+          echo "REPOSITORY_NAME=${REPOSITORY_NAME}"
+          echo "REPOSITORY_OWNER=${REPOSITORY_OWNER}"
+
       - name: Install Kustomize
         uses: imranismail/setup-kustomize@v1
         with:
@@ -43,7 +57,7 @@ jobs:
       - name: Update Kubernetes manifests
         run: |
           cd devops
-          kustomize edit set image app=${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_REPO }}:${{ github.sha }}
+          kustomize edit set image app=${{ env.REPOSITORY_OWNER }}/${{ env.REPOSITORY_NAME }}:${{ github.sha }}
           cat kustomization.yaml
 
       - name: Commit changes
