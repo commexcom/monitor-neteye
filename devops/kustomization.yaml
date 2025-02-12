@@ -9,4 +9,4 @@ namespace: base-repository
 images:
 - name: app
   newName: athaydaooo/base-repository
-  newTag: bd65e94cf0edfdccf860204870408e02dd8e7da6
+  newTag: 66bc3bc393741e7ecfe30d529064f5cff390a6c8
