@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm test
+pnpm test
 
-npx lint-staged && jest --bail --findRelatedTests
+pnpm exec lint-staged && jest --bail --findRelatedTests
