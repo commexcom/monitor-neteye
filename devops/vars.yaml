@@ -1,0 +1,6 @@
+# vars.yaml
+repositoryName: base-repository
+repositoryOwner: athaydaooo
+internalPort: 3000
+domain: teste.guaruja.sp.gov.br
+domainSecretName: guarujaspgovbr-tls

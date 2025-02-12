@@ -1,18 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: base-repository
+  name: ${repositoryName}-deployment
 spec:
   selector:
     matchLabels:
-      app: base-repository
+      app: ${repositoryName}
   template:
     metadata:
       labels:
-        app: base-repository
+        app: ${repositoryName}
     spec:
       containers:
-        - name: base-repository
+        - name: ${repositoryName}
           image: app
           ports:
-            - containerPort: 3000
+            - containerPort: ${internalPort}
+          envFrom:
+            - secretRef:
+                name: env-secret
