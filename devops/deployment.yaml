@@ -16,3 +16,6 @@ spec:
           image: app
           ports:
             - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: env-secret
