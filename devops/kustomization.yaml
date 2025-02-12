@@ -1,13 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - deployment.yaml
-  - service.yaml
-  - ingress.yaml
+- deployment.yaml
+- service.yaml
+- ingress.yaml
 
 namespace: base-repository
 
 images:
-  - name: app
-    newName: athaydaooo/base-repository
-    newTag: 66bc3bc393741e7ecfe30d529064f5cff390a6c8
+- name: app
+  newName: athaydaooo/base-repository
+  newTag: a2b7ac60cecb8dd132fb08a4a6ad477d94e47427
