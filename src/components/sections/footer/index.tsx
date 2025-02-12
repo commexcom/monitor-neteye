@@ -12,7 +12,7 @@ const FooterSection: React.FC<FooterProps> = ({ className }) => {
     <section
       className={clsx(
         className || null,
-        "relative flex items-center justify-center w-full"
+        "relative flex items-center justify-center w-full",
       )}
     >
       <footer className="flex flex-col w-full items-center text-center text-surface bg-gray-950 p-10">
