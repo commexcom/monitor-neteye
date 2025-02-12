@@ -6,5 +6,5 @@ spec:
   selector:
     app: base-repository
   ports:
-    - port: 3000
-      targetPort: 80
+    - port: 443
+      targetPort: 3000
