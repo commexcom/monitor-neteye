@@ -24,4 +24,3 @@ spec:
     - hosts:
         - teste.guaruja.sp.gov.br
       secretName: guarujaspgovbr-tls
-      namespace: argocd
