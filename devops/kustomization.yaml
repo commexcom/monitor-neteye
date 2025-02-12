@@ -1,12 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - deployment.yaml
-  - service.yaml
+- deployment.yaml
+- service.yaml
 
 namespace: base-repository
 
 images:
-  - name: app
-    newName: athaydaooo/base-repository
-    newTag: b8f0fecc51c45d0724319f325493a6b2109a0307
+- name: app
+  newName: athaydaooo/base-repository
+  newTag: 43d746d1fb83dd3f25630c85561633e65f7d9dcc
