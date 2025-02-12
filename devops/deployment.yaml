@@ -15,7 +15,7 @@ spec:
         - name: ${repositoryName}
           image: app
           ports:
-            - containerPort: ${dstPort}
+            - containerPort: ${internalPort}
           envFrom:
             - secretRef:
                 name: env-secret
