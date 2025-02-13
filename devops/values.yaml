@@ -7,9 +7,14 @@ service:
   internalPort: 3000
   externalPort: 443
 ingress:
-  enabled: false
+  enabled: true
   className: "nginx"
-  annotations: {nginx.ingress.kubernetes.io/ssl-redirect: "true", nginx.ingress.kubernetes.io/force-ssl-redirect: "true", nginx.ingress.kubernetes.io/rewrite-target: /}
+  annotations:
+    {
+      nginx.ingress.kubernetes.io/ssl-redirect: "true",
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true",
+      nginx.ingress.kubernetes.io/rewrite-target: /,
+    }
   hosts:
     - host: teste.guaruja.sp.gov.br
       paths:
