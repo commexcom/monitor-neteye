@@ -9,7 +9,12 @@ service:
 ingress:
   enabled: true
   className: "nginx"
-  annotations: {nginx.ingress.kubernetes.io/ssl-redirect: "true", nginx.ingress.kubernetes.io/force-ssl-redirect: "true", nginx.ingress.kubernetes.io/rewrite-target: /}
+  annotations:
+    {
+      nginx.ingress.kubernetes.io/ssl-redirect: "true",
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true",
+      nginx.ingress.kubernetes.io/rewrite-target: /,
+    }
   hosts:
     - host: teste.guaruja.sp.gov.br
       paths:
@@ -19,4 +24,3 @@ ingress:
     - hosts:
         - teste.guaruja.sp.gov.br
       secretName: guarujaspgovbr-tls
-env: []

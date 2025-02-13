@@ -1,9 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  publicRuntimeConfig: {
-    saudacao: process.env.SAUDACAO || "Oi",
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
