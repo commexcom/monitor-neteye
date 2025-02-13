@@ -17,3 +17,8 @@ spec:
           image: "{{ .Values.repositoryOwner }}/{{ .Values.repositoryName }}:{{ .Values.imageTag }}"
           ports:
             - containerPort: {{ .Values.service.internalPort }}
+              env:
+                {{- range .Values.env }}
+                - name: {{ .name }}
+                  value: {{ .value | quote }}
+                {{- end }}
