@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  publicRuntimeConfig: {
+    saudacao: process.env.SAUDACAO || "Oi",
+  },
 };
 
 export default nextConfig;
