@@ -17,8 +17,6 @@ spec:
           image: "{{ .Values.repositoryOwner }}/{{ .Values.repositoryName }}:{{ .Values.imageTag }}"
           ports:
             - containerPort: {{ .Values.service.internalPort }}
-        - envFrom:
+          envFrom:
             - secretRef:
                 name: env-secret
-
-
