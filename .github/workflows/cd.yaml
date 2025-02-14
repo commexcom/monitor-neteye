@@ -3,6 +3,10 @@ name: CD - Deploy com ArgoCD
 on:
   push:
     branches: [main, dev]
+    paths-ignore:
+      - "devops/**"
+      - ".github/**"
+      - ".husky/**"
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
