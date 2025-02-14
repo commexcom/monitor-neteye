@@ -1,6 +1,6 @@
 repositoryName: base-repository
 repositoryOwner: athaydaooo
-imageTag: 8037e655f094f9c0f5d6ce62a3729e44d1f78b50
+imageTag: 01f5aa29e728f5fe318ff868a51d4c467090ac23
 replicaCount: 2
 service:
   type: ClusterIP
