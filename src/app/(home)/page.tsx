@@ -1,4 +1,6 @@
+import getConfig from "next/config";
 import Image from "next/image";
+const { publicRuntimeConfig } = getConfig();
 
 export default function Home() {
   return (
@@ -21,6 +23,7 @@ export default function Home() {
             .
           </li>
           <li>Save and see your changes instantly.</li>
+          <li>{`by ${publicRuntimeConfig.author}`}</li>
         </ol>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
