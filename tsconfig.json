@@ -21,8 +21,7 @@
       "@helpers/*": ["./src/shared/helpers/*"],
       "@config/*": ["./src/shared/configs/*"],
       "@util/*": ["./src/shared/utils/*"],
-      "@shared-errors/*": ["./src/shared/error/*"],
-      "@test/*": ["./test/*"],
+      "@shared-errors/*": ["./src/shared/error/*"]
     },
     "resolveJsonModule": true
   }

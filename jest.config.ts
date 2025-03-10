@@ -11,7 +11,7 @@ const config: Config = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>/',
   }),
-
+  setupFiles: ['<rootDir>/setEnvVars.jest.js'],
   collectCoverageFrom: ['src/**/*.(t|j)s'],
   coveragePathIgnorePatterns: ['routes', 'configs', 'helpers', 'server'],
   coverageDirectory: './coverage',
