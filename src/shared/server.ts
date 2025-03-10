@@ -6,6 +6,7 @@ import cors from 'cors'
 import { routes } from './routes'
 import errorParserMiddleware from './middleware/error-parser'
 import logger from '@util/logger'
+import configs from './configs'
 
 const app = express()
 
@@ -17,6 +18,6 @@ app.use(routes)
 
 app.use(errorParserMiddleware)
 
-app.listen(process.env.SERVER_PORT || 3000, () =>
-  logger.info(`Server is running in port ${process.env.SERVER_PORT}`)
+app.listen(configs.serverPort, () =>
+  logger.info(`Server is running in port ${configs.serverPort}`)
 )

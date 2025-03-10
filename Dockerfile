@@ -8,7 +8,7 @@ RUN npm install -g pnpm
 WORKDIR /app
 
 # Copia os arquivos de dependências
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml tsconfig.json ./
 
 # Instala as dependências
 RUN pnpm install --frozen-lockfile
@@ -17,7 +17,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Constrói o projeto para produção
-RUN pnpm build
+RUN pnpm run build
 
 # Estágio de produção
 FROM node:20-alpine
@@ -30,8 +30,7 @@ WORKDIR /app
 
 # Copia apenas os arquivos necessários para produção
 COPY --from=build /app/package.json /app/pnpm-lock.yaml ./
-COPY --from=build /app/.next ./.next
-COPY --from=build /app/public ./public
+COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
 
 # Expõe a porta 3000
