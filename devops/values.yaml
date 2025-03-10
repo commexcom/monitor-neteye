@@ -1,7 +1,7 @@
 repositoryName: base-repository
 repositoryOwner: athaydaooo
-imageTag: e13cf8d9be07d089b32d3c0efb87de226fe6d167
-replicaCount: 2
+imageTag: latest
+replicaCount: 3
 service:
   enabled: true
   type: ClusterIP
@@ -9,19 +9,19 @@ service:
   externalPort: 443
 ingress:
   enabled: true
-  className: "nginx"
+  className: 'nginx'
   annotations:
     {
-      nginx.ingress.kubernetes.io/ssl-redirect: "true",
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "true",
+      nginx.ingress.kubernetes.io/ssl-redirect: 'true',
+      nginx.ingress.kubernetes.io/force-ssl-redirect: 'true',
       nginx.ingress.kubernetes.io/rewrite-target: /,
     }
   hosts:
-    - host: teste.guaruja.sp.gov.br
+    - host: subdomain.domain.com
       paths:
         - path: /
           pathType: Prefix
   tls:
     - hosts:
-        - teste.guaruja.sp.gov.br
-      secretName: guarujaspgovbr-tls
+        - subdomain.domain.com
+      secretName: domain-tls
