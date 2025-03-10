@@ -9,6 +9,8 @@ const errorParserMiddleware = (
   response: Response,
   next: NextFunction
 ) => {
+  logger.error(err)
+
   if (err instanceof z.ZodError) {
     if (err.message.includes('|~|')) {
       return err.errors.map((err) => {
@@ -34,8 +36,6 @@ const errorParserMiddleware = (
       statusCode: err.statusCode,
     })
   }
-
-  logger.error(err)
 
   return response.status(500).json({
     status: 'Error',
