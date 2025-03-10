@@ -1,5 +1,5 @@
 import { Something, SomeTypes } from '../types/domain/something'
-import { GetSomethingResponse } from '../types/some-api/getSomething/get-something-response'
+import { GetSomethingResponse } from '../types/some-api/get-something/get-something-response'
 
 export class SomethingMapper {
   static toDomain(getSomethingResponse: GetSomethingResponse): Something {

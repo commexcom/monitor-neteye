@@ -1,5 +1,5 @@
 import { SomeApiClient } from '@modules/v1/clients/some-api/some-api-client'
-import { SomethingMapper } from '@modules/v1/mappers/somethingMapper'
+import { SomethingMapper } from '@modules/v1/mappers/something-mapper'
 
 interface GetSomethingServiceProps {
   someApiClient: SomeApiClient

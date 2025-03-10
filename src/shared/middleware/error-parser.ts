@@ -1,4 +1,4 @@
-import { AppError } from '@shared-errors/AppError'
+import { AppError } from '@shared-errors/app-error'
 import logger from '@util/logger'
 import { Request, Response, NextFunction } from 'express'
 import { z } from 'zod'

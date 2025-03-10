@@ -1,4 +1,4 @@
-import { AppError } from '@shared-errors/AppError'
+import { AppError } from '@shared-errors/app-error'
 
 export const INVALID_RESPONSE_SOME_API = new AppError(
   'Could not get data from some api',
