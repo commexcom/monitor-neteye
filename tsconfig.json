@@ -1,27 +1,29 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "CommonJS",
+    "removeComments": true,
+    "target": "ES2020",
+    "sourceMap": true,
     "allowJs": true,
-    "skipLibCheck": true,
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "allowSyntheticDefaultImports": true,
     "strict": true,
-    "noEmit": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "skipLibCheck": true,
     "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+      "@modules/*": ["./src/modules/*"],
+      "@helpers/*": ["./src/shared/helpers/*"],
+      "@config/*": ["./src/shared/configs/*"],
+      "@util/*": ["./src/shared/utils/*"],
+      "@shared-errors/*": ["./src/shared/error/*"],
+      "@test/*": ["./test/*"],
+    },
+    "resolveJsonModule": true
+  }
 }
