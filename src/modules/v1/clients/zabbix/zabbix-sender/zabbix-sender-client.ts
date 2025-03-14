@@ -5,6 +5,7 @@ import {
 } from '@v1/errors/zabbix-server'
 import ZabbixSender, { ZabbixSenderResponse } from 'node-zabbix-sender'
 import { IZabbixSenderClient } from './i-zabbix-sender-client'
+import { ZabbixItem } from '@modules/v1/types/domain/zabbix-item'
 
 export interface SendInfo {
   processed: number
@@ -22,17 +23,18 @@ export class ZabbixSenderClient implements IZabbixSenderClient {
     this.sender = new ZabbixSender({ host: zabbixServer, port: zabbixPort })
   }
 
-  async addData(
-    host: string,
-    key: string,
-    value: string | number
-  ): Promise<void> {
-    if (!host || !key || value === undefined || value === null) {
+  async addData(host: string, zabbixItem: ZabbixItem): Promise<void> {
+    if (
+      !host ||
+      !zabbixItem.key ||
+      zabbixItem.value === undefined ||
+      zabbixItem.value === null
+    ) {
       throw ZABBIX_SENDER_CONFIG_ERROR
     }
 
     try {
-      await this.sender.addItem(host, key, value)
+      await this.sender.addItem(host, zabbixItem.key, zabbixItem.value)
     } catch (error) {
       throw new AppError(
         `Failed to add HOST:${host} data to Zabbix Server`,
