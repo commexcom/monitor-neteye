@@ -6,6 +6,7 @@ import {
 import ZabbixSender, { ZabbixSenderResponse } from 'node-zabbix-sender'
 import { IZabbixSenderClient } from './i-zabbix-sender-client'
 import { ZabbixItem } from '@modules/v1/types/domain/zabbix-item'
+import logger from '@util/logger'
 
 export interface SendInfo {
   processed: number
@@ -23,7 +24,27 @@ export class ZabbixSenderClient implements IZabbixSenderClient {
     this.sender = new ZabbixSender({ host: zabbixServer, port: zabbixPort })
   }
 
-  async addData(host: string, zabbixItem: ZabbixItem): Promise<void> {
+  async sendItems(hostname: string, zabbixItens: ZabbixItem[]): Promise<void> {
+    await this.clearItems()
+    zabbixItens.forEach(async (zabbixItem) => {
+      await this.addData(hostname, zabbixItem).catch(() => {
+        logger.error(
+          `${hostname} - Error trying to addItem > ${zabbixItem.key}`
+        )
+      })
+    })
+
+    const sentData = await this.sendAll()
+
+    if (sentData.failed > 0) {
+      logger.warn(`${hostname} - Data sent with ${sentData.failed} failed`)
+      return
+    }
+
+    logger.info(`${hostname} - Data sent successfully`)
+  }
+
+  private async addData(host: string, zabbixItem: ZabbixItem): Promise<void> {
     if (
       !host ||
       !zabbixItem.key ||
@@ -44,7 +65,7 @@ export class ZabbixSenderClient implements IZabbixSenderClient {
     }
   }
 
-  async sendAll(): Promise<SendInfo> {
+  private async sendAll(): Promise<SendInfo> {
     const sendPromise = () =>
       new Promise<ZabbixSenderResponse>((resolve, reject) => {
         this.sender.send((err, res) => {
@@ -69,7 +90,7 @@ export class ZabbixSenderClient implements IZabbixSenderClient {
     }
   }
 
-  async clearItems(): Promise<void> {
+  private async clearItems(): Promise<void> {
     try {
       await this.sender.clearItems()
     } catch (error) {
@@ -80,6 +101,7 @@ export class ZabbixSenderClient implements IZabbixSenderClient {
       )
     }
   }
+
   private parseZabbixResponse(response: string): SendInfo {
     const result: SendInfo = {
       processed: 0,
