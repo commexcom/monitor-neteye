@@ -7,12 +7,8 @@ import ZabbixSender, { ZabbixSenderResponse } from 'node-zabbix-sender'
 import { IZabbixSenderClient } from './i-zabbix-sender-client'
 import { ZabbixItem } from '@modules/v1/types/domain/zabbix-item'
 import logger from '@util/logger'
+import { SendAllResponse } from '@modules/v1/types/dto/zabbix-sender/send-all-response'
 
-export interface SendInfo {
-  processed: number
-  failed: number
-  total: number
-}
 export class ZabbixSenderClient implements IZabbixSenderClient {
   private sender: ZabbixSender
 
@@ -65,7 +61,7 @@ export class ZabbixSenderClient implements IZabbixSenderClient {
     }
   }
 
-  private async sendAll(): Promise<SendInfo> {
+  private async sendAll(): Promise<SendAllResponse> {
     const sendPromise = () =>
       new Promise<ZabbixSenderResponse>((resolve, reject) => {
         this.sender.send((err, res) => {
@@ -102,8 +98,8 @@ export class ZabbixSenderClient implements IZabbixSenderClient {
     }
   }
 
-  private parseZabbixResponse(response: string): SendInfo {
-    const result: SendInfo = {
+  private parseZabbixResponse(response: string): SendAllResponse {
+    const result: SendAllResponse = {
       processed: 0,
       failed: 0,
       total: 0,

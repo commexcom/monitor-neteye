@@ -1,4 +1,4 @@
-import Host from '@v1/types/dto/zabbix/host'
+import Host from '@modules/v1/types/dto/zabbix-api/host'
 import {
   ZABBIX_API_AUTHORIZATION_ERROR,
   ZABBIX_API_CONFIG_ERROR,
