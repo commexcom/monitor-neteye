@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import { collectorRouter } from './routes/collector.routes'
+import { unitRouter } from './routes/unit.routes'
 
-const collectorRoutes = Router()
+const interfaceRoutes = Router()
 
-collectorRoutes.use('/collector', collectorRouter)
+interfaceRoutes.use('/unit', unitRouter)
 
-export { collectorRoutes }
+export { interfaceRoutes }
