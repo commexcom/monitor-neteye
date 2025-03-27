@@ -1,27 +1,24 @@
-import Host from '@modules/collector/types/dto/zabbix-api/host'
 import {
   ZABBIX_API_AUTHORIZATION_ERROR,
   ZABBIX_API_CONFIG_ERROR,
   ZABBIX_API_FETCHINGHOSTS_ERROR,
   ZABBIX_API_INVALID_PARAMETERS,
   ZABBIX_API_MISSING_AUTHENTICATION,
-} from '@modules/collector/errors/zabbix-api'
+} from 'src/shared/errors/zabbix-api'
 import axios, { AxiosInstance } from 'axios'
 import { IZabbixApiClient } from './i-zabbix-api-client'
+import {
+  ZabbixHost,
+  ZabbixItem,
+  ZabbixItemHistory,
+  ZabbixResponse,
+} from '@modules/interface/types/zabbix-api/zabbix-response'
+import {
+  ZABBIX_API_FETCHING_HISTORY_ERROR,
+  ZABBIX_API_FETCHINGITEMS_ERROR,
+} from 'src/shared/errors/zabbix-api'
 
-interface AuthorizeResponseData {
-  jsonrpc: string
-  result: string
-  id: number
-}
-
-interface GetHostsResponseData {
-  jsonrpc: string
-  result: Host[]
-  id: number
-}
-
-export class ZabbixApiClient implements IZabbixApiClient {
+class ZabbixApiClient implements IZabbixApiClient {
   private client: AxiosInstance
   private authKey: string | null
 
@@ -42,7 +39,7 @@ export class ZabbixApiClient implements IZabbixApiClient {
   async authorize(username: string, password: string): Promise<void> {
     if (!username || !password) throw ZABBIX_API_INVALID_PARAMETERS
     try {
-      const auth = await this.client.post<AuthorizeResponseData>('', {
+      const auth = await this.client.post<ZabbixResponse<string>>('', {
         jsonrpc: '2.0',
         method: 'user.login',
         params: {
@@ -53,22 +50,20 @@ export class ZabbixApiClient implements IZabbixApiClient {
         auth: null,
       })
 
-      if (auth.status !== 200 || !auth.data)
+      if (auth.status !== 200 || !auth.data.result)
         throw ZABBIX_API_AUTHORIZATION_ERROR
 
-      const authData = auth.data
-
-      this.authKey = authData.result
+      this.authKey = auth.data.result
     } catch (error) {
       throw ZABBIX_API_AUTHORIZATION_ERROR
     }
   }
 
-  async getHosts(groupId?: string): Promise<Host[]> {
+  async getHosts(groupId?: string): Promise<ZabbixHost[]> {
     if (!this.authKey) throw ZABBIX_API_MISSING_AUTHENTICATION
 
     try {
-      const hosts = await this.client.post<GetHostsResponseData>('', {
+      const hosts = await this.client.post<ZabbixResponse<ZabbixHost[]>>('', {
         jsonrpc: '2.0',
         method: 'host.get',
         params: {
@@ -76,15 +71,82 @@ export class ZabbixApiClient implements IZabbixApiClient {
           groupids: groupId,
           selectInterfaces: ['ip'],
         },
-        id: 2,
+        id: 1,
         auth: this.authKey,
       })
 
-      if (hosts.status !== 200) throw ZABBIX_API_FETCHINGHOSTS_ERROR
+      if (hosts.data.error || !hosts.data.result)
+        throw ZABBIX_API_FETCHINGHOSTS_ERROR
 
       return hosts.data.result
     } catch (error) {
       throw ZABBIX_API_FETCHINGHOSTS_ERROR
     }
   }
+
+  async getHostItems(hostId: string): Promise<ZabbixItem[]> {
+    if (!this.authKey) throw ZABBIX_API_MISSING_AUTHENTICATION
+
+    try {
+      const response = await this.client.post<ZabbixResponse<ZabbixItem[]>>(
+        '',
+        {
+          jsonrpc: '2.0',
+          method: 'item.get',
+          params: {
+            output: 'extend',
+            hostids: hostId,
+            sortfield: 'name',
+          },
+          id: 1, // ID fixo para todas as requisições
+          auth: this.authKey,
+        }
+      )
+
+      if (response.data.error || !response.data.result) {
+        throw ZABBIX_API_FETCHINGITEMS_ERROR
+      }
+
+      return response.data.result
+    } catch (error) {
+      throw ZABBIX_API_FETCHINGITEMS_ERROR
+    }
+  }
+
+  async getItemHistory(
+    itemId: string,
+    limit: number = 100
+  ): Promise<ZabbixItemHistory[]> {
+    if (!this.authKey) throw ZABBIX_API_MISSING_AUTHENTICATION
+    if (!itemId) throw ZABBIX_API_INVALID_PARAMETERS
+
+    try {
+      const response = await this.client.post<
+        ZabbixResponse<ZabbixItemHistory[]>
+      >('', {
+        jsonrpc: '2.0',
+        method: 'history.get',
+        params: {
+          output: 'extend',
+          history: 3, // 0 - float, 3 - numeric unsigned
+          itemids: itemId,
+          sortfield: 'clock',
+          sortorder: 'DESC',
+          limit,
+        },
+        id: 1,
+        auth: this.authKey,
+      })
+
+      if (response.data.error || !response.data.result) {
+        throw ZABBIX_API_FETCHING_HISTORY_ERROR
+      }
+
+      return response.data.result
+    } catch (error) {
+      throw ZABBIX_API_FETCHING_HISTORY_ERROR
+    }
+  }
 }
+
+export default ZabbixApiClient
