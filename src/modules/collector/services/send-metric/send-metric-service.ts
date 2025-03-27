@@ -1,6 +1,6 @@
-import { ZabbixSenderClient } from '@modules/v1/clients/zabbix/zabbix-sender/zabbix-sender-client'
-import { MetricMapper } from '@modules/v1/mappers/metric-mapper'
-import { Metric } from '@modules/v1/types/domain/metric'
+import { ZabbixSenderClient } from '@modules/collector/clients/zabbix/zabbix-sender/zabbix-sender-client'
+import { MetricMapper } from '@modules/collector/mappers/metric-mapper'
+import { Metric } from '@modules/collector/types/domain/metric'
 
 interface SendMetricServiceProps {
   zabbixSenderClient: ZabbixSenderClient

@@ -2,12 +2,12 @@ import { AppError } from '@shared-errors/app-error'
 import {
   ZABBIX_SENDER_CONFIG_ERROR,
   ZABBIX_SENDER_SENDDATA_ERROR,
-} from '@v1/errors/zabbix-server'
+} from '@modules/collector/errors/zabbix-server'
 import ZabbixSender, { ZabbixSenderResponse } from 'node-zabbix-sender'
 import { IZabbixSenderClient } from './i-zabbix-sender-client'
-import { ZabbixItem } from '@modules/v1/types/domain/zabbix-item'
+import { ZabbixItem } from '@modules/collector/types/domain/zabbix-item'
 import logger from '@util/logger'
-import { SendAllResponse } from '@modules/v1/types/dto/zabbix-sender/send-all-response'
+import { SendAllResponse } from '@modules/collector/types/dto/zabbix-sender/send-all-response'
 
 export class ZabbixSenderClient implements IZabbixSenderClient {
   private sender: ZabbixSender

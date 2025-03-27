@@ -1,11 +1,11 @@
-import Host from '@modules/v1/types/dto/zabbix-api/host'
+import Host from '@modules/collector/types/dto/zabbix-api/host'
 import {
   ZABBIX_API_AUTHORIZATION_ERROR,
   ZABBIX_API_CONFIG_ERROR,
   ZABBIX_API_FETCHINGHOSTS_ERROR,
   ZABBIX_API_INVALID_PARAMETERS,
   ZABBIX_API_MISSING_AUTHENTICATION,
-} from '@v1/errors/zabbix-api'
+} from '@modules/collector/errors/zabbix-api'
 import axios, { AxiosInstance } from 'axios'
 import { IZabbixApiClient } from './i-zabbix-api-client'
 
