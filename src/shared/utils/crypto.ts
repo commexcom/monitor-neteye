@@ -24,6 +24,6 @@ class Crypto {
   }
 }
 
-let crypto = new Crypto()
+const crypto = new Crypto()
 
 export { crypto }
