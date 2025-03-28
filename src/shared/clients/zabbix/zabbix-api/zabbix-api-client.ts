@@ -12,11 +12,12 @@ import {
   ZabbixItem,
   ZabbixItemHistory,
   ZabbixResponse,
-} from '@modules/interface/types/zabbix-api/zabbix-response'
+} from 'src/shared/types/zabbix-api/zabbix-response'
 import {
   ZABBIX_API_FETCHING_HISTORY_ERROR,
   ZABBIX_API_FETCHINGITEMS_ERROR,
 } from 'src/shared/errors/zabbix-api'
+import logger from '@util/logger'
 
 class ZabbixApiClient implements IZabbixApiClient {
   private client: AxiosInstance

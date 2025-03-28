@@ -1,4 +1,4 @@
-import ZabbixApiClient from '@modules/interface/clients/zabbix-api/zabbix-api-client'
+import ZabbixApiClient from '@clients/zabbix/zabbix-api/zabbix-api-client'
 import UnitOverviewMapper from '@modules/interface/mappers/unit/overview-mapper'
 import { UnitOverview } from '@modules/interface/types/unit/overview'
 

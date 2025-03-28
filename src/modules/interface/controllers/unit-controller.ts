@@ -1,8 +1,8 @@
 import { Response, Request } from 'express'
 
-import { getUnitPageSchema } from '../data-schemas/get-unit-page-schema'
-import ZabbixApiClient from '../clients/zabbix-api/zabbix-api-client'
-import { GetUnitInterfacesService } from '../services/unit/get-unit-interfaces-service'
+import { getUnitPageSchema } from '@interface/data-schemas/get-unit-page-schema'
+import { GetUnitInterfacesService } from '@interface/services/unit/get-unit-interfaces-service'
+import ZabbixApiClient from '@clients/zabbix/zabbix-api/zabbix-api-client'
 
 interface UnitControllerProps {
   zabbixApiClient: ZabbixApiClient

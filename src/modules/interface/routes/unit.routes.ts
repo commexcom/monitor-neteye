@@ -1,18 +1,12 @@
 import { Router } from 'express'
-import configs from '@config/index'
-import zabbixAuthMiddleware from 'src/shared/middleware/zabbix-auth'
-import { ZabbixApiClient } from '../clients/zabbix-api/zabbix-api-client'
-import { UnitController } from '../controllers/unit-controller'
-
-const zabbixApiClient = new ZabbixApiClient(configs.zabbixApiUrl)
+import { zabbixApi } from 'src/shared/clients/zabbix/zabbix-api'
+import { UnitController } from '@interface/controllers/unit-controller'
 
 const unitController = new UnitController({
-  zabbixApiClient: zabbixApiClient,
+  zabbixApiClient: zabbixApi,
 })
 
 const unitRouter = Router()
-
-unitRouter.use(zabbixAuthMiddleware)
 
 unitRouter.get('/overview', unitController.getOverview.bind(unitController))
 

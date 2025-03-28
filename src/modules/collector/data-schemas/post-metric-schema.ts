@@ -1,4 +1,4 @@
-import { INVALID_PARAMETER, MISSING_PARAMETER } from '../errors/index'
+import { INVALID_PARAMETER, MISSING_PARAMETER } from '@collector/errors/index'
 
 import { z } from 'zod'
 

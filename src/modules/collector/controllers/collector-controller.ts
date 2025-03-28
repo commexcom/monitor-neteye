@@ -1,9 +1,8 @@
+import { ZabbixSenderClient } from '@clients/zabbix/zabbix-sender/zabbix-sender-client'
 import { Response, Request } from 'express'
-
-import { postMetricSchema } from '../data-schemas/post-metric-schema'
-import { Metric } from '../types/domain/metric'
-import { ZabbixSenderClient } from '../clients/zabbix/zabbix-sender/zabbix-sender-client'
-import { SendMetricService } from '../services/send-metric/send-metric-service'
+import { Metric } from '@collector/types/domain/metric'
+import { postMetricSchema } from '@collector/data-schemas/post-metric-schema'
+import { SendMetricService } from '@collector//services/send-metric/send-metric-service'
 
 interface CollectorControllerProps {
   zabbixSenderClient: ZabbixSenderClient

@@ -1,4 +1,4 @@
-import ZabbixApiClient from '@modules/interface/clients/zabbix-api/zabbix-api-client'
+import ZabbixApiClient from '@clients/zabbix/zabbix-api/zabbix-api-client'
 import UnitPerformanceMapper from '@modules/interface/mappers/unit/performance-mapper'
 import { UnitPerformance } from '@modules/interface/types/unit/performance'
 

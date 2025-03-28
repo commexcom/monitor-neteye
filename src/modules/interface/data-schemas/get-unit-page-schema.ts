@@ -1,8 +1,4 @@
-import {
-  INVALID_PARAMETER,
-  MISSING_PARAMETER,
-} from '../../../shared/errors/index'
-
+import { MISSING_PARAMETER, INVALID_PARAMETER } from '@shared-errors/index'
 import { z } from 'zod'
 
 export const getUnitPageSchema = z.object({

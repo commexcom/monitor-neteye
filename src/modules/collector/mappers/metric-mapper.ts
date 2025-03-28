@@ -1,9 +1,9 @@
-import { Metric } from '../types/domain/metric'
-import { ZabbixItem } from '../types/domain/zabbix-item'
+import { Metric } from '@collector/types/domain/metric'
+import { ZabbixSenderItem } from 'src/shared/types/zabbix-sender/zabbix-item'
 
 export class MetricMapper {
-  static toZabbixItens(metric: Metric): ZabbixItem[] {
-    const zabbixItens: ZabbixItem[] = []
+  static toZabbixItens(metric: Metric): ZabbixSenderItem[] {
+    const zabbixItens: ZabbixSenderItem[] = []
 
     Object.entries(metric).forEach(([_key, _value]) => {
       const key = _key as keyof Metric

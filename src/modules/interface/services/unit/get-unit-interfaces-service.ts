@@ -1,6 +1,5 @@
-import ZabbixApiClient from '@modules/interface/clients/zabbix-api/zabbix-api-client'
+import ZabbixApiClient from '@clients/zabbix/zabbix-api/zabbix-api-client'
 import UnitInterfacesMapper from '@modules/interface/mappers/unit/interfaces-mapper'
-import OverviewMapper from '@modules/interface/mappers/unit/overview-mapper'
 
 interface GetUnitInterfacesServiceProps {
   zabbixApiClient: ZabbixApiClient

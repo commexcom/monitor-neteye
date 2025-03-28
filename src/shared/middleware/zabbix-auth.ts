@@ -1,20 +1,21 @@
 import { Request, Response, NextFunction } from 'express'
-import { zabbixApi } from '../clients/zabbix-api'
 import configs from '@config/index'
+import { zabbixApi } from '../clients/zabbix/zabbix-api'
 
 const zabbixAuthMiddleware = async (
-  err: Error,
   request: Request,
   response: Response,
   next: NextFunction
 ) => {
-  await zabbixApi
-    .authorize(configs.zabbixApiUsername, configs.zabbixApiPassword)
-    .catch((error) => {
-      next(error)
-    })
-
-  next()
+  try {
+    await zabbixApi.authorize(
+      configs.zabbixApiUsername,
+      configs.zabbixApiPassword
+    )
+    next()
+  } catch (error) {
+    next(error) // Passa o erro para o tratador de erros do Express
+  }
 }
 
 export default zabbixAuthMiddleware

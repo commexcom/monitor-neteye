@@ -5,10 +5,9 @@ import {
 } from '@modules/collector/errors/zabbix-server'
 import ZabbixSender, { ZabbixSenderResponse } from 'node-zabbix-sender'
 import { IZabbixSenderClient } from './i-zabbix-sender-client'
-import { ZabbixItem } from '@modules/collector/types/domain/zabbix-item'
 import logger from '@util/logger'
 import { SendAllResponse } from '@modules/collector/types/dto/zabbix-sender/send-all-response'
-import configs from '@config/index'
+import { ZabbixSenderItem } from 'src/shared/types/zabbix-sender/zabbix-item'
 
 export class ZabbixSenderClient implements IZabbixSenderClient {
   private sender: ZabbixSender
@@ -21,7 +20,10 @@ export class ZabbixSenderClient implements IZabbixSenderClient {
     this.sender = new ZabbixSender({ host: zabbixServer, port: zabbixPort })
   }
 
-  async sendItems(hostname: string, zabbixItens: ZabbixItem[]): Promise<void> {
+  async sendItems(
+    hostname: string,
+    zabbixItens: ZabbixSenderItem[]
+  ): Promise<void> {
     await this.clearItems()
     zabbixItens.forEach(async (zabbixItem) => {
       await this.addData(hostname, zabbixItem).catch(() => {
@@ -41,7 +43,10 @@ export class ZabbixSenderClient implements IZabbixSenderClient {
     logger.info(`${hostname} - Data sent successfully`)
   }
 
-  private async addData(host: string, zabbixItem: ZabbixItem): Promise<void> {
+  private async addData(
+    host: string,
+    zabbixItem: ZabbixSenderItem
+  ): Promise<void> {
     if (
       !host ||
       !zabbixItem.key ||

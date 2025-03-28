@@ -2,7 +2,7 @@ import {
   ZabbixHost,
   ZabbixItem,
   ZabbixItemHistory,
-} from '@modules/interface/types/zabbix-api/zabbix-response'
+} from 'src/shared/types/zabbix-api/zabbix-response'
 
 export abstract class IZabbixApiClient {
   abstract authorize(username: string, password: string): Promise<void>

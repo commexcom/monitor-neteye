@@ -1,4 +1,4 @@
-import { ZabbixSenderClient } from '@modules/collector/clients/zabbix/zabbix-sender/zabbix-sender-client'
+import { ZabbixSenderClient } from 'src/shared/clients/zabbix/zabbix-sender/zabbix-sender-client'
 import { MetricMapper } from '@modules/collector/mappers/metric-mapper'
 import { Metric } from '@modules/collector/types/domain/metric'
 
