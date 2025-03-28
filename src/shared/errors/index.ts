@@ -13,3 +13,9 @@ export const MISSING_PARAMETER = (param: string) =>
     400,
     `parameters.missing.${param}`
   )
+
+export const PARSE_ZABBIX_ITEM_ERROR = new AppError(
+  `error trying to parse zabbix item`,
+  500,
+  `ZABBIX.ITEM.PARSER`
+)

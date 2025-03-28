@@ -68,7 +68,14 @@ class ZabbixApiClient implements IZabbixApiClient {
         jsonrpc: '2.0',
         method: 'host.get',
         params: {
-          output: ['hostid', 'host'],
+          output: [
+            'hostid',
+            'host',
+            'name',
+            'description',
+            'interfaces',
+            'status',
+          ],
           groupids: groupId,
           selectInterfaces: ['ip'],
         },
@@ -95,7 +102,7 @@ class ZabbixApiClient implements IZabbixApiClient {
           jsonrpc: '2.0',
           method: 'item.get',
           params: {
-            output: 'extend',
+            output: ['name', 'key_', 'lastvalue', 'lastclock', 'value_type'],
             hostids: hostId,
             sortfield: 'name',
           },
@@ -103,7 +110,7 @@ class ZabbixApiClient implements IZabbixApiClient {
           auth: this.authKey,
         }
       )
-
+      logger.info(JSON.stringify(response.data.result))
       if (response.data.error || !response.data.result) {
         throw ZABBIX_API_FETCHINGITEMS_ERROR
       }
