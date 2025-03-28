@@ -8,12 +8,13 @@ import { IZabbixSenderClient } from './i-zabbix-sender-client'
 import { ZabbixItem } from '@modules/collector/types/domain/zabbix-item'
 import logger from '@util/logger'
 import { SendAllResponse } from '@modules/collector/types/dto/zabbix-sender/send-all-response'
+import configs from '@config/index'
 
 export class ZabbixSenderClient implements IZabbixSenderClient {
   private sender: ZabbixSender
 
-  constructor(zabbixServer: string, zabbixPort?: number) {
-    if (!zabbixServer || !zabbixPort) {
+  constructor(zabbixServer: string, zabbixPort: number = 10051) {
+    if (!zabbixServer) {
       throw ZABBIX_SENDER_CONFIG_ERROR
     }
 
