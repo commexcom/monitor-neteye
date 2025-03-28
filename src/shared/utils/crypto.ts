@@ -1,4 +1,4 @@
-import { AES, enc } from 'crypto-js'
+import { AES, enc, lib } from 'crypto-js'
 import cryptoConfig from '../configs/crypto-config'
 
 interface CryptoProps {
@@ -7,12 +7,19 @@ interface CryptoProps {
 
 class Crypto {
   encrypt({ data }: CryptoProps) {
-    const cipher = AES.encrypt(data, cryptoConfig.key)
-    return cipher.toString()
+    const iv = lib.WordArray.random(16)
+    const cipher = AES.encrypt(data, cryptoConfig.key, { iv })
+
+    return iv.toString(enc.Hex) + cipher.toString()
   }
 
   decrypt({ data }: CryptoProps) {
-    const decrypted = AES.decrypt(data, cryptoConfig.key)
+    const ivHex = data.slice(0, 32)
+    const iv = enc.Hex.parse(ivHex)
+
+    const ciphertext = data.slice(32)
+
+    const decrypted = AES.decrypt(ciphertext, cryptoConfig.key, { iv })
     return decrypted.toString(enc.Utf8)
   }
 }
