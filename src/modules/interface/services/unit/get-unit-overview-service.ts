@@ -21,6 +21,8 @@ export class GetUnitOverviewService {
 
     const lanItems = await this.zabbixApiClient.getHostItems(host.hostid)
 
-    return UnitOverviewMapper.toPage(lanItems)
+    const _lanId = Number(lanId)
+
+    return UnitOverviewMapper.toPage(_lanId, host, lanItems)
   }
 }

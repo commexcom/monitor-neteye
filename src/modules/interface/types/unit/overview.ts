@@ -1,23 +1,25 @@
 export interface UnitOverview {
+  name: string
+  lanId: number
   disponibility: number
   latency: number
   packetLoss: number
   uptime: string
-  dnsStatus: boolean
   linkQuantity: number
-  unit: number
-  unitName: string
   address: string
+  dnsStatus: boolean
   dnsAddreses: string
   secretariat: string
-  routerModel: string
-  routerIp: string
+  model: string
+  ipAddress: string
   upload: {
     time: Date
     value: number
   }[]
-  download: {
-    time: Date
-    value: number
-  }[]
+  download: HistoricValue[]
+}
+
+export interface HistoricValue {
+  time: Date
+  value: number
 }
