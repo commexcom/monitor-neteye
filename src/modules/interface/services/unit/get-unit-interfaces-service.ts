@@ -1,5 +1,7 @@
 import ZabbixApiClient from '@clients/zabbix/zabbix-api/zabbix-api-client'
 import UnitInterfacesMapper from '@modules/interface/mappers/unit/interfaces-mapper'
+import { UnitInterfaces } from '@modules/interface/types/unit/interfaces'
+import { findHostByLanid } from '@modules/interface/utils/find-host-by-lanid'
 
 interface GetUnitInterfacesServiceProps {
   zabbixApiClient: ZabbixApiClient
@@ -13,8 +15,12 @@ export class GetUnitInterfacesService {
   }
 
   async execute(lanId: string): Promise<UnitInterfaces> {
-    const LanItems = await this.zabbixApiClient.getHostItems(lanId)
+    const hosts = await this.zabbixApiClient.getHosts('20')
 
-    return UnitInterfacesMapper.toPage(LanItems)
+    const host = findHostByLanid(lanId, hosts)
+
+    const lanItens = await this.zabbixApiClient.getHostItems(host.hostid)
+
+    return UnitInterfacesMapper.toPage(lanItens)
   }
 }

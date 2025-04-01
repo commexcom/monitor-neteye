@@ -10,7 +10,7 @@ const unitRouter = Router()
 
 unitRouter.get('/overview', unitController.getOverview.bind(unitController))
 
-unitRouter.get('/interfaces', unitController.getOverview.bind(unitController))
+unitRouter.get('/interfaces', unitController.getInterfaces.bind(unitController))
 
 unitRouter.get('/performance', unitController.getOverview.bind(unitController))
 
