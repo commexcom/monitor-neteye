@@ -28,6 +28,18 @@ export class GetUnitOverviewService {
     )
     const yesterdayDate = new Date(Date.now() - 24 * 60 * 60 * 1000)
     const todayDate = new Date(Date.now())
+    const firstDayOfMonth = new Date(
+      todayDate.getFullYear(),
+      todayDate.getMonth(),
+      1
+    )
+
+    const pingHistory = await this.zabbixApiClient.getItemHistory(
+      unitOverviewMapper.getItemId('maxPing'),
+      0,
+      firstDayOfMonth,
+      todayDate
+    )
 
     const uploadHistory = await this.zabbixApiClient.getItemHistory(
       unitOverviewMapper.getItemId('interface.tx.5'),
@@ -45,6 +57,7 @@ export class GetUnitOverviewService {
 
     unitOverviewMapper.setUpload(uploadHistory)
     unitOverviewMapper.setDownload(downloadHistory)
+    unitOverviewMapper.setDisponibility(pingHistory)
 
     return unitOverviewMapper.toUnitOverview()
   }

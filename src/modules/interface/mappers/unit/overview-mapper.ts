@@ -2,8 +2,10 @@ import {
   HistoricValue,
   UnitOverview,
 } from '@modules/interface/types/unit/overview'
+import { zabbixItemHistoryToHourly } from '@util/index'
 import logger from '@util/logger'
 import ZabbixItensParser from '@util/zabbix-itens-parser'
+import { on } from 'events'
 import {
   ZabbixHost,
   ZabbixItem,
@@ -21,6 +23,7 @@ class UnitOverviewMapper extends ZabbixItensParser {
   private lanId: number
   private upload: HistoricValue[]
   private download: HistoricValue[]
+  private disponibility: number
 
   constructor(lanId: number, host: ZabbixHost, itens: ZabbixItem[]) {
     super(itens)
@@ -94,51 +97,39 @@ class UnitOverviewMapper extends ZabbixItensParser {
   }
 
   private getDisponibility(): number {
-    return 98 //todo
+    return this.disponibility
+  }
+
+  setDisponibility(pingHistory: ZabbixItemHistory[]): void {
+    let onlineChecks = 0
+
+    pingHistory.forEach((element) => {
+      if (element.value === '1') onlineChecks++
+    })
+    const disponibility = (onlineChecks / pingHistory.length) * 100
+    this.disponibility = parseFloat(disponibility.toFixed(2))
   }
 
   setUpload(upload: ZabbixItemHistory[]): void {
-    const hoursDone: number[] = []
-    const nowMinutes = new Date().getMinutes()
-    const history: HistoricValue[] = []
+    const historyHourly = zabbixItemHistoryToHourly(upload)
 
-    upload.forEach((item) => {
-      const itemDate = new Date(parseInt(item.clock) * 1000)
-      const itemHour = itemDate.getHours()
-      const itemMinutes = itemDate.getMinutes()
+    const mappedHistoryHourly = historyHourly.map((item) => ({
+      time: new Date(parseInt(item.clock) * 1000),
+      value: Number(item.value),
+    }))
 
-      if (itemMinutes === nowMinutes && !hoursDone.includes(itemHour)) {
-        hoursDone.push(itemHour)
-        history.push({
-          time: itemDate,
-          value: Number(item.value),
-        })
-      }
-    })
-
-    this.upload = history.slice(0, 24)
+    this.upload = mappedHistoryHourly.slice(0, 24)
   }
 
   setDownload(download: ZabbixItemHistory[]): void {
-    const hoursDone: number[] = []
-    const nowMinutes = new Date().getMinutes()
-    const history: HistoricValue[] = []
+    const historyHourly = zabbixItemHistoryToHourly(download)
 
-    download.forEach((item) => {
-      const itemDate = new Date(parseInt(item.clock) * 1000)
-      const itemHour = itemDate.getHours()
-      const itemMinutes = itemDate.getMinutes()
+    const mappedHistoryHourly = historyHourly.map((item) => ({
+      time: new Date(parseInt(item.clock) * 1000),
+      value: Number(item.value),
+    }))
 
-      if (itemMinutes === nowMinutes && !hoursDone.includes(itemHour)) {
-        hoursDone.push(itemHour)
-        history.push({
-          time: itemDate,
-          value: Number(item.value),
-        })
-      }
-    })
-
-    this.download = history.slice(0, 24)
+    this.download = mappedHistoryHourly.slice(0, 24)
   }
 
   public toUnitOverview(): UnitOverview {
