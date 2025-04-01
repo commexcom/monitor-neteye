@@ -4,13 +4,14 @@ export interface UnitOverview {
   disponibility: number
   latency: number
   packetLoss: number
-  uptime: string
+  uptime: number
   linkQuantity: number
   address: string
   dnsStatus: boolean
   dnsAddreses: string
   secretariat: string
   model: string
+  version: string
   ipAddress: string
   upload: {
     time: Date

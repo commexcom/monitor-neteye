@@ -41,8 +41,8 @@ class UnitOverviewMapper extends ZabbixItensParser {
     return this.lanId
   }
 
-  private getUptime(): string {
-    return this.getItemAsString('uptime')
+  private getUptime(): number {
+    return this.getItemAsNumber('uptime')
   }
 
   private getLatency(): number {
@@ -64,7 +64,7 @@ class UnitOverviewMapper extends ZabbixItensParser {
     return uplinks.length
   }
 
-  private getAdress(): string {
+  private getAddress(): string {
     return this.getItemAsString('address')
   }
 
@@ -82,6 +82,9 @@ class UnitOverviewMapper extends ZabbixItensParser {
 
   private getModel(): string {
     return this.getItemAsString('model')
+  }
+  private getVersion(): string {
+    return this.getItemAsString('version')
   }
 
   private getIpAddress(): string {
@@ -136,8 +139,9 @@ class UnitOverviewMapper extends ZabbixItensParser {
     return {
       name: this.getName(),
       lanId: this.getLanId(),
-      address: this.getAdress(),
+      address: this.getAddress(),
       model: this.getModel(),
+      version: this.getVersion(),
       ipAddress: this.getIpAddress(),
       secretariat: this.getSecretariat(),
       disponibility: this.getDisponibility(),
