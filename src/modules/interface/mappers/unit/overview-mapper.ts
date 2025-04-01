@@ -3,9 +3,7 @@ import {
   UnitOverview,
 } from '@modules/interface/types/unit/overview'
 import { zabbixItemHistoryToHourly } from '@util/index'
-import logger from '@util/logger'
 import ZabbixItensParser from '@util/zabbix-itens-parser'
-import { on } from 'events'
 import {
   ZabbixHost,
   ZabbixItem,
@@ -14,7 +12,9 @@ import {
 
 /**
  * @description Maps Zabbix data to UnitOverview
- * @param zabbixData - Zabbix data to be mapped
+ * @param lanId - LAN unit unique identification be mapped
+ * @param host - Zabbix Host of mapped itens
+ * @param itens - Zabbix Itens to be mapped
  * @returns UnitOverview
  */
 
