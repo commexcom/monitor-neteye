@@ -14,8 +14,16 @@ export const MISSING_PARAMETER = (param: string) =>
     `parameters.missing.${param}`
   )
 
-export const PARSE_ZABBIX_ITEM_ERROR = new AppError(
-  `error trying to parse zabbix item`,
-  500,
-  `ZABBIX.ITEM.PARSER`
-)
+export const PARSE_ZABBIX_ITEM_ERROR = (key: string) =>
+  new AppError(
+    `error trying to parse zabbix item: ${key}`,
+    500,
+    `ZABBIX.ITEM.PARSER`
+  )
+
+export const PARSE_ZABBIX_ITEMID_ERROR = (key: string) =>
+  new AppError(
+    `error trying to parse zabbix item id: ${key}`,
+    500,
+    `ZABBIX.ITEM_ID.PARSER`
+  )

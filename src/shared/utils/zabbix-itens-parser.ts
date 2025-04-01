@@ -1,4 +1,7 @@
-import { PARSE_ZABBIX_ITEM_ERROR } from '@shared-errors/index'
+import {
+  PARSE_ZABBIX_ITEM_ERROR,
+  PARSE_ZABBIX_ITEMID_ERROR,
+} from '@shared-errors/index'
 import { ZabbixItem } from '../types/zabbix-api/zabbix-response'
 
 class ZabbixItensParser {
@@ -23,38 +26,38 @@ class ZabbixItensParser {
 
   getItemDate(key: string): Date {
     const item = this.itens.find((i) => i.key_ === key)
-    if (!item) throw PARSE_ZABBIX_ITEM_ERROR
+    if (!item) throw PARSE_ZABBIX_ITEM_ERROR(key)
     return this.parseDate(item.lastclock)
   }
 
   getItemName(key: string): string {
     const item = this.itens.find((i) => i.key_ === key)
-    if (!item) throw PARSE_ZABBIX_ITEM_ERROR
+    if (!item) throw PARSE_ZABBIX_ITEM_ERROR(key)
     return item.name
   }
 
   getItemAsBoolean(key: string): boolean {
     const item = this.itens.find((i) => i.key_ === key)
-    if (!item) throw PARSE_ZABBIX_ITEM_ERROR
+    if (!item) throw PARSE_ZABBIX_ITEM_ERROR(key)
     return this.parseBoolean(item.lastvalue)
   }
 
   getItemAsString(key: string): string {
     const item = this.itens.find((i) => i.key_ === key)
-    if (!item) throw PARSE_ZABBIX_ITEM_ERROR
+    if (!item) throw PARSE_ZABBIX_ITEM_ERROR(key)
     return item.lastvalue
   }
 
   getItemAsNumber(key: string): number {
     const item = this.itens.find((i) => i.key_ === key)
-    if (!item) throw PARSE_ZABBIX_ITEM_ERROR
+    if (!item) throw PARSE_ZABBIX_ITEM_ERROR(key)
     return this.parseNumber(item.lastvalue)
   }
 
   getItem(key: string): boolean | number | string {
     const item = this.itens.find((i) => i.key_ === key)
 
-    if (!item) throw PARSE_ZABBIX_ITEM_ERROR
+    if (!item) throw PARSE_ZABBIX_ITEM_ERROR(key)
 
     switch (item.value_type) {
       case '0':
@@ -64,6 +67,14 @@ class ZabbixItensParser {
       default:
         return item.lastvalue
     }
+  }
+
+  getItemId(key: string): string {
+    const item = this.itens.find((i) => i.key_ === key)
+
+    if (!item) throw PARSE_ZABBIX_ITEMID_ERROR(key)
+
+    return item.itemid
   }
 }
 

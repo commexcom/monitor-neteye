@@ -2,10 +2,12 @@ import {
   HistoricValue,
   UnitOverview,
 } from '@modules/interface/types/unit/overview'
+import logger from '@util/logger'
 import ZabbixItensParser from '@util/zabbix-itens-parser'
 import {
   ZabbixHost,
   ZabbixItem,
+  ZabbixItemHistory,
 } from 'src/shared/types/zabbix-api/zabbix-response'
 
 /**
@@ -17,11 +19,15 @@ import {
 class UnitOverviewMapper extends ZabbixItensParser {
   private host: ZabbixHost
   private lanId: number
+  private upload: HistoricValue[]
+  private download: HistoricValue[]
 
   constructor(lanId: number, host: ZabbixHost, itens: ZabbixItem[]) {
     super(itens)
     this.lanId = lanId
     this.host = host
+    this.upload = [{} as HistoricValue]
+    this.download = [{} as HistoricValue]
   }
 
   private getName(): string {
@@ -64,7 +70,7 @@ class UnitOverviewMapper extends ZabbixItensParser {
   }
 
   private getDnsAddreses(): string {
-    return this.getItemAsString('dnsAddreses') //todo
+    return this.getItemAsString('dnsAddreses')
   }
 
   private getSecretariat(): string {
@@ -80,23 +86,65 @@ class UnitOverviewMapper extends ZabbixItensParser {
   }
 
   private getUpload(): HistoricValue[] {
-    return [{} as HistoricValue] //todo
+    return this.upload
   }
 
   private getDownload(): HistoricValue[] {
-    return [{} as HistoricValue] //todo
+    return this.download
   }
 
   private getDisponibility(): number {
-    return this.getItemAsNumber('disponibility') //todo
+    return 98 //todo
+  }
+
+  setUpload(upload: ZabbixItemHistory[]): void {
+    const hoursDone: number[] = []
+    const nowMinutes = new Date().getMinutes()
+    const history: HistoricValue[] = []
+
+    upload.forEach((item) => {
+      const itemDate = new Date(parseInt(item.clock) * 1000)
+      const itemHour = itemDate.getHours()
+      const itemMinutes = itemDate.getMinutes()
+
+      if (itemMinutes === nowMinutes && !hoursDone.includes(itemHour)) {
+        hoursDone.push(itemHour)
+        history.push({
+          time: itemDate,
+          value: Number(item.value),
+        })
+      }
+    })
+
+    this.upload = history.slice(0, 24)
+  }
+
+  setDownload(download: ZabbixItemHistory[]): void {
+    const hoursDone: number[] = []
+    const nowMinutes = new Date().getMinutes()
+    const history: HistoricValue[] = []
+
+    download.forEach((item) => {
+      const itemDate = new Date(parseInt(item.clock) * 1000)
+      const itemHour = itemDate.getHours()
+      const itemMinutes = itemDate.getMinutes()
+
+      if (itemMinutes === nowMinutes && !hoursDone.includes(itemHour)) {
+        hoursDone.push(itemHour)
+        history.push({
+          time: itemDate,
+          value: Number(item.value),
+        })
+      }
+    })
+
+    this.download = history.slice(0, 24)
   }
 
   public toUnitOverview(): UnitOverview {
     return {
       name: this.getName(),
       lanId: this.getLanId(),
-      download: this.getDownload(),
-      upload: this.getUpload(),
       address: this.getAdress(),
       model: this.getModel(),
       ipAddress: this.getIpAddress(),
@@ -108,6 +156,8 @@ class UnitOverviewMapper extends ZabbixItensParser {
       dnsAddreses: this.getDnsAddreses(),
       uptime: this.getUptime(),
       dnsStatus: this.getDnsStatus(),
+      download: this.getDownload(),
+      upload: this.getUpload(),
     }
   }
 

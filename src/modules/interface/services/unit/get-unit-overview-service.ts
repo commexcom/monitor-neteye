@@ -21,8 +21,31 @@ export class GetUnitOverviewService {
 
     const lanItems = await this.zabbixApiClient.getHostItems(host.hostid)
 
-    const _lanId = Number(lanId)
+    const unitOverviewMapper = new UnitOverviewMapper(
+      Number(lanId),
+      host,
+      lanItems
+    )
+    const yesterdayDate = new Date(Date.now() - 24 * 60 * 60 * 1000)
+    const todayDate = new Date(Date.now())
 
-    return UnitOverviewMapper.toPage(_lanId, host, lanItems)
+    const uploadHistory = await this.zabbixApiClient.getItemHistory(
+      unitOverviewMapper.getItemId('interface.tx.5'),
+      0,
+      yesterdayDate,
+      todayDate
+    )
+
+    const downloadHistory = await this.zabbixApiClient.getItemHistory(
+      unitOverviewMapper.getItemId('interface.rx.5'),
+      0,
+      yesterdayDate,
+      todayDate
+    )
+
+    unitOverviewMapper.setUpload(uploadHistory)
+    unitOverviewMapper.setDownload(downloadHistory)
+
+    return unitOverviewMapper.toUnitOverview()
   }
 }

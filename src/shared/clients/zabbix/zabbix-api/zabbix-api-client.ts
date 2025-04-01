@@ -110,7 +110,7 @@ class ZabbixApiClient implements IZabbixApiClient {
           auth: this.authKey,
         }
       )
-      logger.info(JSON.stringify(response.data.result))
+
       if (response.data.error || !response.data.result) {
         throw ZABBIX_API_FETCHINGITEMS_ERROR
       }
@@ -123,7 +123,9 @@ class ZabbixApiClient implements IZabbixApiClient {
 
   async getItemHistory(
     itemId: string,
-    limit: number = 100
+    limit: number = 100,
+    from?: Date,
+    to?: Date
   ): Promise<ZabbixItemHistory[]> {
     if (!this.authKey) throw ZABBIX_API_MISSING_AUTHENTICATION
     if (!itemId) throw ZABBIX_API_INVALID_PARAMETERS
@@ -136,11 +138,13 @@ class ZabbixApiClient implements IZabbixApiClient {
         method: 'history.get',
         params: {
           output: 'extend',
-          history: 3, // 0 - float, 3 - numeric unsigned
+          history: 3,
           itemids: itemId,
+          time_from: from ? Math.floor(from.getTime() / 1000) : undefined,
+          time_till: to ? Math.floor(to.getTime() / 1000) : undefined,
           sortfield: 'clock',
           sortorder: 'DESC',
-          limit,
+          limit: limit <= 0 ? undefined : limit,
         },
         id: 1,
         auth: this.authKey,
