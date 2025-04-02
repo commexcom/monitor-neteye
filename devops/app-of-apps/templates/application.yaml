@@ -9,11 +9,6 @@ spec:
     repoURL: {{ .repoURL }}
     targetRevision: {{ .targetRevision | default "main" }}
     path: {{ .path }}
-    {{- if .values }}
-    helm:
-      values: |
-        {{- toYaml .values | nindent 8 }}
-    {{- end }}
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .namespace }}
