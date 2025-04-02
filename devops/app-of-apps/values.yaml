@@ -38,9 +38,3 @@ applications:
     targetRevision: HEAD
     path: devops/database
     namespace: monitor-neteye
-    values:
-      auth:
-        enablePostgresUser: true
-        postgresPassword: '@SuperSenha123' # Defina uma senha forte
-        username: 'postgres' # Usuário padrão
-        database: 'monitor-neteye' # Nome do banco padrão
