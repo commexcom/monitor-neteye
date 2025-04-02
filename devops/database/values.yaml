@@ -36,9 +36,9 @@ global:
     ##
     auth:
       enablePostgresUser: true
-      postgresPassword: '@SuperSenha123' # Defina uma senha forte
-      username: 'postgres' # Usuário padrão
-      database: 'monitor-neteye' # Nome do banco padrão
+      postgresPassword: ''
+      username: ''
+      database: ''
     ## @param global.postgresql.service.ports.postgresql PostgreSQL service port (overrides `service.ports.postgresql`)
     ##
     service:
