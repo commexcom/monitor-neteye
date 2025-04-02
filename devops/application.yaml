@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/commexcom/monitor-neteye.git
     targetRevision: feat/database-devops
-    path: devops/app-of-apps
+    path: devops
     kustomize:
       namePrefix: 'monitor-neteye-'
   destination:
