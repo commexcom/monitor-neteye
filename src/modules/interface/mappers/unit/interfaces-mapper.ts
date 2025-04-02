@@ -45,7 +45,7 @@ class UnitInterfacesMapper extends ZabbixItensParser {
   private getInterfaces(): Interface[] {
     const interfaces: Interface[] = []
 
-    for (let i = 1; i < 5; i++) {
+    for (let i = 1; i < 6; i++) {
       const element: Interface = {
         status: this.getInterfaceStatus(i),
         name: this.getInterfaceName(i),
