@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/commexcom/monitor-neteye.git
-    targetRevision: feat/database-devops
+    targetRevision: '{{branch}}'
     path: devops/api
   destination:
     server: https://kubernetes.default.svc
