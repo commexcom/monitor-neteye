@@ -1,10 +1,12 @@
 import { Router } from 'express'
-import { v1Routes } from '@modules/v1/routes'
 import { healthcheckRoutes } from '@modules/healthcheck/routes'
+import { collectorRoutes } from '@modules/collector/routes'
+import { interfaceRoutes } from '@modules/interface/routes'
 
 const routes = Router()
 
 routes.use('/', healthcheckRoutes)
-routes.use('/v1', v1Routes)
+routes.use('/collector', collectorRoutes)
+routes.use('/interface', interfaceRoutes)
 
 export { routes }
