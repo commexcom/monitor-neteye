@@ -3,3 +3,10 @@ kind: Kustomization
 resources:
   - ./api/application.yaml
   - ./database/application.yaml
+vars:
+  - name: TARGET_REVISION
+    objref:
+      kind: Application
+      name: app-of-apps
+    fieldref:
+      fieldpath: metadata.annotations['argocd.argoproj.io/target-revision']
