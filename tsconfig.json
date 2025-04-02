@@ -19,9 +19,12 @@
     "paths": {
       "@modules/*": ["./src/modules/*"],
       "@helpers/*": ["./src/shared/helpers/*"],
+      "@clients/*": ["./src/shared/clients/*"],
       "@config/*": ["./src/shared/configs/*"],
       "@util/*": ["./src/shared/utils/*"],
-      "@shared-errors/*": ["./src/shared/error/*"]
+      "@shared-errors/*": ["src/shared/errors/*"],
+      "@collector/*": ["src/modules/collector/*"],
+      "@interface/*": ["src/modules/interface/*"]
     },
     "resolveJsonModule": true
   }

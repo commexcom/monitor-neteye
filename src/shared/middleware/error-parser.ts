@@ -1,4 +1,4 @@
-import { AppError } from '@shared-errors/app-error'
+import { AppError } from 'src/shared/errors/app-error'
 import logger from '@util/logger'
 import { Request, Response, NextFunction } from 'express'
 import { z } from 'zod'
@@ -12,20 +12,15 @@ const errorParserMiddleware = (
   logger.error(err)
 
   if (err instanceof z.ZodError) {
-    if (err.message.includes('|~|')) {
-      return err.errors.map((err) => {
-        const [errorCode, erroMessage, statusCode] = err.message.split(' |~| ')
+    const appError = new AppError(
+      err.issues[0].message,
+      400,
+      'VALIDATION_ERROR'
+    )
 
-        return response.status(statusCode ? Number(statusCode) : 400).json({
-          code: errorCode,
-          message: erroMessage,
-        })
-      })
-    }
-
-    return response.status(400).json({
-      code: 400,
-      message: err.message,
+    return response.status(appError.statusCode).json({
+      errCode: appError.errorCode,
+      message: appError.message,
     })
   }
 
@@ -33,13 +28,12 @@ const errorParserMiddleware = (
     return response.status(err.statusCode).json({
       errCode: err.errorCode,
       message: err.message,
-      statusCode: err.statusCode,
     })
   }
 
   return response.status(500).json({
-    status: 'Error',
-    message: 'Internal server error',
+    errCode: 'INTERNAL_ERROR',
+    message: 'Internal server error. Check logs for more details.',
   })
 }
 
