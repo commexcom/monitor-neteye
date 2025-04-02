@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitor-neteye-api
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/commexcom/monitor-neteye.git
+    targetRevision: feat/database-devops
+    path: devops/api
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitor-neteye
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
