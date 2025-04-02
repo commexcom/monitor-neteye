@@ -6,7 +6,9 @@ resources:
 vars:
   - name: TARGET_REVISION
     objref:
+      apiVersion: argoproj.io/v1alpha1
       kind: Application
       name: app-of-apps
+      namespace: argocd
     fieldref:
       fieldpath: metadata.annotations['argocd.argoproj.io/target-revision']
