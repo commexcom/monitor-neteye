@@ -13,3 +13,6 @@ resources:
   requests:
     cpu: '500m' # 0.50 vCPU
     memory: '512Mi' # 512 MB RAM
+
+passwordUpdateJob:
+  enabled: false
